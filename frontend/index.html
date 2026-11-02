@@ -1,0 +1,347 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Attendance Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+
+    
+<!-- Login -->
+
+    <section id="loginSection" class="login-container">
+       
+        <h2>Employee Attendance System</h2>
+
+        <form id="loginForm">
+            <label for="email">Email</label>
+            <input type="email" id="email" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" required>
+
+            <button type="submit">Login</button>
+            <p id="message"></p>
+        </form>
+    </section>
+
+<!-- Password Reset -->
+
+    <section id="resetPasswordSection" class="login-container" hidden>
+
+        <h2>Reset Your Password</h2>
+
+        <form id="resetPasswordForm">
+            <label for="temporaryPassword">Temporary Password</label>
+            <input type="password" id="temporaryPassword" required>
+
+            <label for="newPassword">New Password</label>
+            <input type="password" id="newPassword" required>
+
+            <button type="submit">Reset Password</button>
+
+            <p id="resetPasswordMessage"></p>
+        </form>
+
+    </section>
+
+
+<!-- Admin Dashboard -->
+
+<section id="adminDashboard" class="dashboard" hidden>
+    <p id="adminSessionMessage"></p>
+    <h2>Admin Dashboard</h2>
+    <button onclick="refreshAccessToken()">Refresh Session</button>
+    <button type="button" onclick="logout()">Logout</button>
+     <button type="button" onclick="backToLogin()">Back to Login Page</button>
+    <hr>
+    <h3>My Profile</h3>
+    <button type="button" onclick="loadMyProfile('adminProfile')">View Profile</button>
+    <button type="button" onclick="closeSection('adminProfile')">Close</button>
+    <div id="adminProfile" hidden></div>
+    <h3>Create Manager</h3>
+    <form id="managerForm">
+        <input type="text" id="managerName" placeholder="Full Name" required>
+        <input type="email" id="managerEmail" placeholder="Email" required>
+        <input type="text" id="managerPhone" placeholder="Phone" required>
+        <input type="password" id="managerPassword" placeholder="Password" required>
+        <button type="submit">Create Manager</button>
+    </form>
+    <p id="managerMessage"></p>
+    
+    <hr>
+    <h3>Employee Details</h3>
+    <button type="button" onclick="loadEmployees()">View All Employees</button>
+    <button type="button" onclick="closeSection('employeeList')">Close</button>
+    <div id="employeeList" hidden></div>
+
+    <hr>
+    <h3>Register Employee</h3>
+
+    <form id="registerEmployeeForm">
+        <input type="number" id="registerEmployeeId" placeholder="Employee ID" min="1" required>
+        <input type="text" id="registerEmployeeName" placeholder="Full Name" required>
+        <input type="email" id="registerEmployeeEmail" placeholder="Email" required>
+        <input type="text" id="registerEmployeePhone" placeholder="Phone" required>
+        <input type="text" id="registerEmployeeDepartment" placeholder="Department" required>
+        <input type="text" id="registerEmployeeDesignation" placeholder="Designation" required>
+
+        <select id="registerEmployeeManager" required>
+            <option value="">Select Manager</option>
+        </select>
+
+        <input type="password" id="registerEmployeePassword" placeholder="Temporary Password" required>
+
+        <button type="submit">Register Employee</button>
+    </form>
+
+    <p id="registerEmployeeMessage"></p>
+
+
+
+    <h4>Find Employee by ID</h4>
+    <input type="number" id="adminEmployeeId" placeholder="Employee ID" min="1">
+    <button type="button" onclick="getEmployeeById('admin')">View Employee</button>
+    <button type="button" onclick="closeSection('adminEmployeeDetails')">Close</button>
+    <div id="adminEmployeeDetails" hidden></div>
+
+    <h4>Update Employee</h4>
+    <form id="updateEmployeeForm">
+        <input type="number" id="updateEmployeeId" placeholder="Employee ID" min="1" required>
+        <input type="text" id="updateEmployeeName" placeholder="Employee Name" required>
+        <input type="email" id="updateEmployeeEmail" placeholder="Email" required>
+        <input type="text" id="updateEmployeePhone" placeholder="Phone" required>
+        <input type="text" id="updateEmployeeDepartment" placeholder="Department" required>
+        <input type="text" id="updateEmployeeDesignation" placeholder="Designation" required>
+        <button type="submit">Update Employee</button>
+    </form>
+    <p id="updateEmployeeMessage"></p>
+
+    <h4>Delete Employee</h4>
+    <input type="number" id="deleteEmployeeId" placeholder="Employee ID" min="1">
+    <button type="button" onclick="deleteEmployee()">Delete Employee</button>
+    <p id="deleteEmployeeMessage"></p>
+
+    <h4>Deactivate Employee</h4>
+    <form id="deactivateEmployeeForm">
+        <input type="number" id="deactivateEmployeeId"
+              placeholder="Employee ID" min="1" required>
+        <button type="submit">Deactivate Employee</button>
+    </form>
+    <p id="deactivateEmployeeMessage"></p>
+
+    <hr>
+    <h3>Attendance Management</h3>
+
+    <h4>View All Attendance</h4>
+    <button type="button" onclick="loadAllAttendance()">View All Attendance</button>
+    <button type="button" onclick="closeSection('adminAttendanceList')">Close</button>
+    <div id="adminAttendanceList" hidden></div>
+
+    <h4>View Attendance by Employee ID</h4>
+    <input type="number" id="adminAttendanceEmployeeId" placeholder="Employee ID" min="1">
+    <button type="button" onclick="getAttendanceByEmployeeId('admin')">View Attendance</button>
+    <button type="button" onclick="closeSection('adminEmployeeAttendance')">Close</button>
+    <div id="adminEmployeeAttendance" hidden></div>
+
+    <hr>
+    <h3>All Leave Records</h3>
+    <button type="button" onclick="loadAllLeaves()">View All Leave Records</button>
+    <button type="button" onclick="closeSection('adminLeaveList')">Close</button>
+    <div id="adminLeaveList" hidden></div>
+</section>
+    
+
+<!-- Manager Dashboard -->
+
+    <section id="managerDashboard" class="dashboard" hidden>
+        <p id="managerSessionMessage"></p>
+        <h2>Manager Dashboard</h2>
+        <button onclick="refreshAccessToken()">Refresh Session</button>
+        <button type="button" onclick="logout()">Logout</button>
+        <button type="button" onclick="backToLogin()">Back to Login Page</button>
+        <h3>My Profile</h3>
+        <button type="button" onclick="loadMyProfile('managerProfile')">View Profile</button>
+        <button type="button" onclick="closeSection('managerProfile')">Close</button>
+        <div id="managerProfile" hidden></div> 
+
+        <!-- Assigned Employees -->
+        <h3>Assigned Employees</h3>
+        <button type="button" onclick="loadEmployees()">View Assigned Employees</button>
+        <button type="button" onclick="closeSection('managerEmployeeList')">
+            Close
+        </button>
+        <div id="managerEmployeeList" hidden></div>
+
+        <!-- Assigned Employees' Attendance -->
+        <h3>Assigned Employees' Attendance</h3>
+        <button type="button" onclick="loadAllAttendance()">
+            View Assigned Employees' Attendance
+        </button>
+        <button type="button" onclick="closeSection('managerAttendanceList')">
+            Close
+        </button>
+        <div id="managerAttendanceList" hidden></div>
+
+        <!-- Find Assigned Employee -->
+        <h3>Find Assigned Employee by ID</h3>
+        <input type="number" id="managerEmployeeId" placeholder="Employee ID" min="1">
+
+        <button type="button" onclick="getEmployeeById('manager')">
+            View Employee Details
+        </button>
+        <button type="button" onclick="closeSection('managerEmployeeDetails')">
+            Close Employee Details
+        </button>
+        <div id="managerEmployeeDetails" hidden></div>
+
+        <!-- Attendance by Employee ID -->
+        <h3>Attendance by Employee ID</h3>
+        <input
+            type="number"
+            id="managerAttendanceEmployeeId"
+            placeholder="Enter Employee ID"
+            min="1"
+        >
+        <button type="button" onclick="getAttendanceByEmployeeId('manager')">
+            View Attendance
+        </button>
+        <button type="button" onclick="closeSection('managerEmployeeAttendance')">
+            Close Attendance
+        </button>
+        <div id="managerEmployeeAttendance" hidden></div>
+
+        <!-- Mark Attendance -->
+        <h3>Mark Attendance</h3>
+
+        <form id="markAttendanceForm">
+            <input
+                type="number"
+                id="markAttendanceEmployeeId"
+                placeholder="Employee ID"
+                min="1"
+                required
+            >
+
+            <select id="markAttendanceStatus" required>
+                <option value="">Select Attendance Status</option>
+                <option value="Present">Present</option>
+                <option value="Absent">Absent</option>
+                <option value="Leave">Leave</option>
+            </select>
+
+            <button type="submit">Mark Attendance</button>
+        </form>
+
+        <p id="markAttendanceMessage"></p>
+
+
+        <!-- Update Today's Attendance -->
+        <h3>Update Today's Attendance</h3>
+
+        <form id="updateAttendanceForm">
+            <input
+                type="number"
+                id="updateAttendanceEmployeeId"
+                placeholder="Employee ID"
+                min="1"
+                required
+            >
+
+            <select id="updateAttendanceStatus" required>
+                <option value="">Select New Status</option>
+                <option value="Present">Present</option>
+                <option value="Absent">Absent</option>
+                <option value="Leave">Leave</option>
+            </select>
+
+            <button type="submit">Update Attendance</button>
+        </form>
+
+        <p id="updateAttendanceMessage"></p>
+
+        <!-- Delete Attendance -->
+        <h3>Delete Attendance</h3>
+
+        <form id="deleteAttendanceForm">
+        <input
+            type="number"
+            id="deleteAttendanceEmployeeId"
+            placeholder="Employee ID"
+            min="1"
+            required
+        >
+
+        <input
+            type="date"
+            id="deleteAttendanceDate"
+            required
+        >
+
+        <button type="submit">Delete Attendance</button>
+    </form>
+
+    <p id="deleteAttendanceMessage"></p>
+
+        <!-- Pending Leave Requests -->
+        <h3>Pending Leave Requests</h3>
+        <button type="button" onclick="loadPendingLeaves()">
+            View Pending Leaves
+        </button>
+        <button type="button" onclick="closeSection('pendingLeaveList')">
+            Close
+        </button>
+        <div id="pendingLeaveList" hidden></div>
+    </section>
+    
+<!-- Employee Dashboard -->
+
+    <section id="employeeDashboard" class="dashboard" hidden>
+        <h2>Empoyee Dashboard</h2>
+        <p id="employeeSessionMessage"></p>
+        <button onclick="refreshAccessToken()">Refresh Session</button>
+        <button onclick="logout()">Logout</button>
+        <button type="button" onclick="backToLogin()">Back to Login Page</button>
+
+        <h3>My Profile</h3>
+        <button type="button" onclick="loadMyProfile('employeeProfile')">View Profile</button>
+        <button type="button" onclick="closeSection('employeeProfile')">Close</button>
+        <div id="employeeProfile" hidden></div>
+
+        <h3>My Attendance</h3>
+        <button onclick="loadMyAttendance()">View Attendance</button>
+        <button type="button" onclick="closeSection('myAttendance')">Close</button>
+        <div id="myAttendance" hidden></div>
+
+        <h3>Apply for Leave</h3>
+        <form id="leaveForm">
+            <label for="fromDate">From Date</label>
+            <input type="date" id="fromDate" required>
+
+            <label for="toDate">To Date</label>
+            <input type="date" id="toDate" required>
+
+            <label for="leaveType">Leave Type</label>
+            <input type="text" id="leaveType" required>
+
+            <label for="leaveReason">Reason</label>
+            <textarea id="leaveReason" required></textarea>
+
+            <button type="submit">Apply</button>
+        </form>
+        <p id="leaveMessage"></p>
+
+        <h3>My Leave Status</h3>
+        <button onclick="loadMyLeaves()">View Leave Status</button>
+        <button type="button" onclick="closeSection('myLeaves')">Close</button>
+        <div id="myLeaves"></div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
