@@ -1,0 +1,139 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 30px;
+    font-family: Arial, sans-serif;
+    background: #f2f5f9;
+    color: #222;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 80px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    margin-top: 0;
+    color: #243b64;
+}
+
+h3 {
+    margin-top: 25px;
+    color: #34495e;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 6px;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font: inherit;
+}
+
+button {
+    padding: 10px 16px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 5px;
+    background: #2459a9;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #183f7c;
+}
+
+.dashboard {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard[hidden],
+.login-container[hidden] {
+    display: none;
+}
+
+#message,
+#managerMessage,
+#leaveMessage {
+    color: #c0392b;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 12px;
+    }
+
+    .dashboard {
+        padding: 16px;
+    }
+}
+
+
+
+.leave-card {
+    margin: 12px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.leave-card p {
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.leave-card button {
+    margin-right: 10px;
+}
+
+.leave-card button:last-child {
+    background: #c0392b;
+}
+
+.leave-card button:last-child:hover {
+    background: #922b21;
+}
+
+
+.register-link {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+}
+
+.register-link button {
+    background: transparent;
+    color: #2563eb;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.register-link button:hover {
+    text-decoration: underline;
+}
