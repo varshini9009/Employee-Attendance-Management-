@@ -1,5 +1,5 @@
 
-const API_URL = "http://127.0.0.1:8000";
+const API_URL = "https://employee-attendance-management-qxo2.onrender.com";
 document.getElementById("loginForm").addEventListener("submit", async function (event) {
     event.preventDefault();
     const email = document.getElementById("email").value;
