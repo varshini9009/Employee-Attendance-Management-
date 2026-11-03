@@ -50,22 +50,25 @@ employee_attendance_management/
 ### Admin
 - Login and logout
 - Create Managers
+- register employees
 - View all Employees
 - Search Employees by ID
 - Update Employee details
 - Delete Employees
 - View all Attendance records
 - View Attendance by Employee ID
-- Mark and update Attendance
-- Delete Attendance records
 - View all Leave records
+- deactivate account
 
 ### Manager
 - Login and logout
 - View assigned Employees
+- mark attendance to assiged employees
 - View assigned Employee details
 - View assigned Employees' Attendance
 - Search Attendance by Employee ID
+- update attendance
+- delete attendance
 - View pending Leave requests
 - Approve or reject Leave requests
 
